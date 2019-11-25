@@ -4,4 +4,4 @@ set -e
 
 # YOUR CODE BELOW THIS LINE
 # ----------------------------------------------------------------------------
-echo "This is an empty launch script. Update it to launch your application."
+roslaunch --wait rtsp_ros_driver rtsp_driver_node.launch $@

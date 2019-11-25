@@ -1,0 +1,20 @@
+<launch>
+    <arg name="image_topic" default="~image" />
+
+    <!-- RTSP camera info -->
+    <arg name="hostname" doc="hostname or IP of the rtsp camera" />
+    <arg name="stream" doc="name of the video stream published by the rtsp camera" />
+    <arg name="auth" default="false" doc="whether the camera need authentication" />
+    <arg name="username" default="" doc="username for the rtsp camera" />
+    <arg name="password" default="" doc="password for the rtsp camera" />
+    <arg name="port" default="554" doc="port of the rtsp camera" />
+
+    <node pkg="rtsp_ros_driver" type="rtsp_driver_node.py" name="rtsp_driver_node" output="screen">
+        <!-- create rtsp_resource parameter -->
+        <param unless="$(arg auth)" name="rtsp_resource" value="rtsp://$(arg hostname):$(arg port)/$(arg stream)" />
+        <param if="$(arg auth)" name="rtsp_resource" value="rtsp://$(arg username):$(arg password)@$(arg hostname):$(arg port)/$(arg stream)" />
+        <!-- image topic -->
+        <param name="image_topic" value="$(arg image_topic)" />
+    </node>
+
+</launch>
